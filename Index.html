@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="zh-TW" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NOCTURNE | 暮色微醺 複合式餐酒館 - Bistro & Mixology Lounge</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        night: {
+                            950: '#07070b',
+                            900: '#0b0b10',
+                            800: '#12121c',
+                            700: '#1a1a29',
+                            600: '#26263a'
+                        },
+                        neon: {
+                            pink: '#ff0055',
+                            cyan: '#00f0ff',
+                            purple: '#7928ca',
+                            gold: '#f59e0b'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'Noto Sans TC', 'sans-serif'],
+                        display: ['Cinzel', 'Noto Serif TC', 'serif']
+                    },
+                    boxShadow: {
+                        'neon-pink': '0 0 25px rgba(255, 0, 85, 0.5)',
+                        'neon-cyan': '0 0 25px rgba(0, 240, 255, 0.5)',
+                        'neon-purple': '0 0 25px rgba(121, 40, 202, 0.5)',
+                        'glass': '0 8px 32px 0 rgba(0, 0, 0, 0.67)'
+                    },
+                    animation: {
+                        'pulse-glow': 'pulseGlow 2s infinite ease-in-out',
+                        'float': 'float 6s ease-in-out infinite',
+                        'shimmer': 'shimmer 2.5s infinite linear',
+                        'equalizer': 'equalizer 1.2s ease-in-out infinite alternate'
+                    },
+                    keyframes: {
+                        pulseGlow: {
+                            '0%, 100%': { opacity: 0.8, filter: 'drop-shadow(0 0 15px #ff0055)' },
+                            '50%': { opacity: 1, filter: 'drop-shadow(0 0 30px #00f0ff)' }
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-12px)' }
+                        },
+                        equalizer: {
+                            '0%': { height: '15%' },
+                            '100%': { height: '100%' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800;900&family=Noto+Sans+TC:wght@300;400;600;800&family=Noto+Serif+TC:wght@700;900&family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Custom scrollbar and glassmorphism styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #07070b;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #26263a;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #ff0055;
+        }
+        .glass-panel {
+            background: rgba(18, 18, 28, 0.7);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .glass-panel-glow {
+            background: rgba(26, 26, 41, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 0, 85, 0.25);
+            box-shadow: 0 10px 30px -10px rgba(255, 0, 85, 0.3);
+        }
+        .text-glow-pink {
+            text-shadow: 0 0 12px rgba(255, 0, 85, 0.7);
+        }
+        .text-glow-cyan {
+            text-shadow: 0 0 12px rgba(0, 240, 255, 0.7);
+        }
+        .gradient-text-neon {
+            background: linear-gradient(135deg, #ffffff 0%, #ff0055 50%, #00f0ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .bg-grid-pattern {
+            background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+    </style>
+</head>
+<body class="bg-night-950 text-slate-100 font-sans antialiased overflow-x-hidden selection:bg-neon-pink selection:text-white">
+
+    <!-- Ambient Glowing Noise Canvas Background -->
+    <div class="fixed inset-0 pointer-events-none z-0 opacity-40">
+        <div class="absolute top-0 left-1/4 w-96 h-96 bg-neon-pink/20 rounded-full blur-[120px] animate-pulse"></div>
+        <div class="absolute bottom-1/3 right-1/4 w-[30rem] h-[30rem] bg-neon-cyan/15 rounded-full blur-[150px] animate-pulse" style="animation-delay: 2s;"></div>
+        <div class="absolute top-2/3 left-1/3 w-[25rem] h-[25rem] bg-neon-purple/20 rounded-full blur-[140px] animate-pulse" style="animation-delay: 4s;"></div>
+    </div>
+
+    <!-- Live Booking Notification Toast Widget -->
+    <div id="bookingToast" class="fixed bottom-6 left-6 z-50 transition-all duration-500 transform translate-y-32 opacity-0 pointer-events-none">
+        <div class="glass-panel p-4 rounded-xl flex items-center space-x-4 border-l-4 border-neon-pink shadow-neon-pink max-w-xs md:max-w-sm">
+            <div class="relative flex-shrink-0">
+                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=120&q=80" alt="User" class="w-10 h-10 rounded-full object-cover border border-neon-cyan">
+                <span class="absolute bottom-0 right-0 w-3 h-3 bg-emerald-500 rounded-full border-2 border-night-950"></span>
+            </div>
+            <div>
+                <p class="text-xs text-slate-400">最新即時預約 <span class="text-neon-cyan text-[10px] ml-1">1 分鐘前</span></p>
+                <p class="text-sm font-semibold text-slate-100">台北林小姐 <span class="text-neon-pink">已成功預約</span> VIP 奢華包廂</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Fixed Floating Glass Header -->
+    <header class="fixed top-0 left-0 right-0 z-40 transition-all duration-300 py-4 px-4 sm:px-8" id="navbar">
+        <div class="max-w-7xl mx-auto glass-panel rounded-2xl px-5 py-3.5 flex items-center justify-between border border-white/10 shadow-glass">
+            
+            <!-- Logo with Animated SVG Badge -->
+            <a href="#" class="flex items-center space-x-3 group">
+                <div class="relative w-10 h-10 flex items-center justify-center">
+                    <!-- Glowing SVG Neon Ring -->
+                    <svg class="w-full h-full transform group-hover:rotate-180 transition-transform duration-700" viewBox="0 0 100 100">
+                        <circle cx="50" cy="50" r="42" fill="none" stroke="url(#logoGradient)" stroke-width="6" stroke-dasharray="200" stroke-dashoffset="40"/>
+                        <defs>
+                            <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#ff0055"/>
+                                <stop offset="100%" stop-color="#00f0ff"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                    <span class="absolute font-display font-black text-xl text-white tracking-widest">N</span>
+                </div>
+                <div>
+                    <span class="font-display font-black text-xl md:text-2xl tracking-widest text-white block leading-none">NOCTURNE</span>
+                    <span class="text-[9px] tracking-[0.3em] text-neon-cyan uppercase font-semibold">Bistro & Lounge</span>
+                </div>
+            </a>
+
+            <!-- Desktop Nav Links -->
+            <nav class="hidden lg:flex items-center space-x-8 text-sm font-medium">
+                <a href="#about" class="text-slate-300 hover:text-neon-pink transition-colors">品牌魅力</a>
+                <a href="#menu" class="text-slate-300 hover:text-neon-pink transition-colors">極致菜單</a>
+                <a href="#nightlife" class="text-slate-300 hover:text-neon-pink transition-colors">夜間特企 & DJ</a>
+                <a href="#vip" class="text-slate-300 hover:text-neon-pink transition-colors">奢華包廂</a>
+                <a href="#reviews" class="text-slate-300 hover:text-neon-pink transition-colors">饕客評價</a>
+            </nav>
+
+            <!-- CTA Action Button -->
+            <div class="flex items-center space-x-4">
+                <a href="#reserve" class="relative group inline-flex items-center justify-center px-5 py-2.5 rounded-xl font-bold text-xs uppercase tracking-widest text-white overflow-hidden shadow-neon-pink">
+                    <span class="absolute inset-0 bg-gradient-to-r from-neon-pink via-neon-purple to-neon-cyan transition-all duration-300 group-hover:scale-105"></span>
+                    <span class="relative flex items-center space-x-2">
+                        <svg class="w-4 h-4 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                        </svg>
+                        <span>立即搶先訂位</span>
+                    </span>
+                </a>
+                
+                <!-- Mobile Menu Button -->
+                <button id="mobileMenuBtn" class="lg:hidden text-slate-300 hover:text-white focus:outline-none p-1">
+                    <i class="fa-solid fa-bars-staggered text-2xl"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Drawer Navigation -->
+        <div id="mobileDrawer" class="hidden lg:hidden max-w-7xl mx-auto mt-2 glass-panel rounded-2xl p-6 border border-white/10 transition-all duration-300">
+            <div class="flex flex-col space-y-4 font-medium text-center">
+                <a href="#about" class="mobile-link text-slate-200 py-2 hover:text-neon-pink border-b border-white/5">品牌魅力</a>
+                <a href="#menu" class="mobile-link text-slate-200 py-2 hover:text-neon-pink border-b border-white/5">極致菜單</a>
+                <a href="#nightlife" class="mobile-link text-slate-200 py-2 hover:text-neon-pink border-b border-white/5">夜間特企 & DJ</a>
+                <a href="#vip" class="mobile-link text-slate-200 py-2 hover:text-neon-pink border-b border-white/5">奢華包廂</a>
+                <a href="#reviews" class="mobile-link text-slate-200 py-2 hover:text-neon-pink">饕客評價</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="relative min-h-screen flex items-center justify-center pt-28 pb-16 px-4 sm:px-6 lg:px-8 overflow-hidden z-10">
+        <!-- Background Hero Photo Grid with Dark Gradient Overlay -->
+        <div class="absolute inset-0 z-0">
+            <img src="https://images.unsplash.com/photo-1572116469696-31de0f17cc34?auto=format&fit=crop&w=2000&q=80" alt="NOCTURNE Lounge Interior" class="w-full h-full object-cover object-center opacity-35 filter brightness-90 contrast-125 scale-105 animate-pulse-slow">
+            <div class="absolute inset-0 bg-gradient-to-t from-night-950 via-night-950/70 to-transparent"></div>
+            <div class="absolute inset-0 bg-gradient-to-r from-night-950 via-transparent to-night-950"></div>
+            <div class="absolute inset-0 bg-grid-pattern opacity-30"></div>
+        </div>
+
+        <div class="relative z-10 max-w-5xl mx-auto text-center space-y-8">
+            
+            <!-- Live DJ / Tonight Status SVG Badge -->
+            <div class="inline-flex items-center space-x-3 px-4 py-2 rounded-full glass-panel border border-neon-cyan/40 shadow-neon-cyan/20 animate-float">
+                <span class="relative flex h-3 w-3">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-neon-pink opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-3 w-3 bg-neon-pink"></span>
+                </span>
+                <!-- SVG Audio Equalizer Bars Animation -->
+                <div class="flex items-end space-x-1 h-4">
+                    <span class="w-1 bg-neon-cyan animate-equalizer rounded-full" style="animation-delay: 0.1s"></span>
+                    <span class="w-1 bg-neon-pink animate-equalizer rounded-full" style="animation-delay: 0.3s"></span>
+                    <span class="w-1 bg-neon-purple animate-equalizer rounded-full" style="animation-delay: 0.2s"></span>
+                    <span class="w-1 bg-neon-cyan animate-equalizer rounded-full" style="animation-delay: 0.4s"></span>
+                </div>
+                <span class="text-xs font-bold text-slate-200 tracking-wider uppercase">今夜 DJ LIVE SET 盛大開演｜席位倒數中</span>
+            </div>
+
+            <!-- Main Catchy Title -->
+            <h1 class="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black font-display tracking-tight text-white leading-tight">
+                白天極致味蕾<br>
+                <span class="gradient-text-neon text-glow-pink">夜晚微醺沉醉</span>
+            </h1>
+
+            <p class="max-w-2xl mx-auto text-base sm:text-lg text-slate-300 font-light leading-relaxed">
+                融匯米其林級新派法意料理、前衛調酒煉金術與重低音 Live DJ 節奏。<br class="hidden sm:inline">
+                打破餐館與夜店界線，為台北夜生活重新定義奢華感官體驗。
+            </p>
+
+            <!-- Quick Reservation Direct Bar -->
+            <div class="pt-4 max-w-4xl mx-auto">
+                <form action="#reserve" class="glass-panel p-3 sm:p-4 rounded-2xl md:rounded-full border border-white/15 shadow-2xl flex flex-col md:flex-row items-center gap-3">
+                    <div class="flex-1 w-full flex items-center space-x-3 px-4 py-2.5 rounded-xl md:rounded-full bg-night-900/80 border border-white/5">
+                        <i class="fa-regular fa-calendar text-neon-cyan"></i>
+                        <div class="text-left">
+                            <label class="block text-[10px] text-slate-400 uppercase font-bold tracking-wider">預約日期</label>
+                            <input type="date" value="2026-10-16" class="bg-transparent text-sm text-white focus:outline-none w-full font-semibold">
+                        </div>
+                    </div>
+
+                    <div class="flex-1 w-full flex items-center space-x-3 px-4 py-2.5 rounded-xl md:rounded-full bg-night-900/80 border border-white/5">
+                        <i class="fa-solid fa-user-group text-neon-pink"></i>
+                        <div class="text-left w-full">
+                            <label class="block text-[10px] text-slate-400 uppercase font-bold tracking-wider">用餐人數</label>
+                            <select class="bg-transparent text-sm text-white focus:outline-none w-full font-semibold cursor-pointer">
+                                <option class="bg-night-900">2 位 (雙人約會)</option>
+                                <option class="bg-night-900">4 位 (好友聚會)</option>
+                                <option class="bg-night-900">6-8 位 (派對慶祝)</option>
+                                <option class="bg-night-900">VIP 獨家包廂 (10-15人)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="flex-1 w-full flex items-center space-x-3 px-4 py-2.5 rounded-xl md:rounded-full bg-night-900/80 border border-white/5">
+                        <i class="fa-solid fa-clock text-neon-purple"></i>
+                        <div class="text-left w-full">
+                            <label class="block text-[10px] text-slate-400 uppercase font-bold tracking-wider">時段與氛圍</label>
+                            <select class="bg-transparent text-sm text-white focus:outline-none w-full font-semibold cursor-pointer">
+                                <option class="bg-night-900">18:30 (暮色餐酒)</option>
+                                <option class="bg-night-900">21:00 (微醺DJ場)</option>
+                                <option class="bg-night-900">23:30 (深夜派對)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="w-full md:w-auto px-8 py-3.5 rounded-xl md:rounded-full bg-gradient-to-r from-neon-pink to-neon-purple text-white font-extrabold text-sm uppercase tracking-wider hover:shadow-neon-pink transition-all duration-300 flex items-center justify-center space-x-2 flex-shrink-0">
+                        <span>立即訂位</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </form>
+            </div>
+
+            <!-- Real-time Urgency Indicator -->
+            <div class="flex flex-wrap items-center justify-center gap-6 text-xs text-slate-400 pt-2">
+                <span class="flex items-center space-x-2">
+                    <i class="fa-solid fa-fire text-amber-500"></i>
+                    <span>今晚熱門時段僅剩 <strong class="text-neon-pink font-extrabold text-sm">4</strong> 桌席位</span>
+                </span>
+                <span class="hidden sm:inline text-slate-600">•</span>
+                <span class="flex items-center space-x-2">
+                    <i class="fa-solid fa-shield-halved text-neon-cyan"></i>
+                    <span>Google 4.9★ 超高饕客滿意度認證</span>
+                </span>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- TRIPLE CONCEPT HIGHLIGHTS SECTION -->
+    <section id="about" class="py-24 px-4 sm:px-6 lg:px-8 relative z-10 border-t border-white/5">
+        <div class="max-w-7xl mx-auto space-y-16">
+            
+            <div class="text-center space-y-4">
+                <span class="text-xs font-bold uppercase tracking-[0.4em] text-neon-cyan">The NOCTURNE Experience</span>
+                <h2 class="text-3xl sm:text-5xl font-black font-display text-white">三重感官革命：食味．特調．重音</h2>
+                <div class="w-24 h-1 bg-gradient-to-r from-neon-pink via-neon-purple to-neon-cyan mx-auto rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                
+                <!-- Card 1: Artisanal Gastronomy -->
+                <div class="group relative glass-panel rounded-3xl overflow-hidden border border-white/10 hover:border-neon-pink/50 transition-all duration-500 hover:-translate-y-2">
+                    <div class="h-64 overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=800&q=80" alt="Fine Dining" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-night-900 via-night-900/40 to-transparent"></div>
+                        
+                        <!-- Floating Animated SVG Icon -->
+                        <div class="absolute top-4 right-4 w-12 h-12 glass-panel rounded-2xl flex items-center justify-center text-neon-pink">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="p-8 space-y-3">
+                        <span class="text-xs font-bold text-neon-pink uppercase tracking-widest">01 / Gastronomy</span>
+                        <h3 class="text-2xl font-bold text-white group-hover:text-neon-pink transition-colors">新派法意黑金精緻料理</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed">
+                            由米其林星級背景主廚駐店，選用極品澳洲Wagyu和牛、極鮮海鮮與在地旬味，將美學呈現於黑金盤飾之中。
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Card 2: Cocktail Alchemy -->
+                <div class="group relative glass-panel rounded-3xl overflow-hidden border border-white/10 hover:border-neon-cyan/50 transition-all duration-500 hover:-translate-y-2">
+                    <div class="h-64 overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=800&q=80" alt="Craft Cocktail" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-night-900 via-night-900/40 to-transparent"></div>
+                        
+                        <!-- Floating Animated SVG Icon -->
+                        <div class="absolute top-4 right-4 w-12 h-12 glass-panel rounded-2xl flex items-center justify-center text-neon-cyan">
+                            <svg class="w-6 h-6 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L5.6 15.12a2 2 0 00-1.022.547l-1.3 1.3A1 1 0 004 18.674V19a2 2 0 002 2h12a2 2 0 002-2v-.326a1 1 0 00-.278-.702l-1.3-1.3zM12 3v9"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="p-8 space-y-3">
+                        <span class="text-xs font-bold text-neon-cyan uppercase tracking-widest">02 / Mixology</span>
+                        <h3 class="text-2xl font-bold text-white group-hover:text-neon-cyan transition-colors">迷幻煙霧特調煉金術</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed">
+                            獨家液態氮煙霧、分子泡泡與自家浸漬草本烈酒。每一杯酒皆是一場視覺與嗅覺的微醺魔法實驗。
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Card 3: Immersive Nightlife -->
+                <div class="group relative glass-panel rounded-3xl overflow-hidden border border-white/10 hover:border-neon-purple/50 transition-all duration-500 hover:-translate-y-2">
+                    <div class="h-64 overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=800&q=80" alt="DJ Nightlife" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-night-900 via-night-900/40 to-transparent"></div>
+                        
+                        <!-- Floating Animated SVG Icon -->
+                        <div class="absolute top-4 right-4 w-12 h-12 glass-panel rounded-2xl flex items-center justify-center text-neon-purple">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 .895-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 .895-2 3-2 3 .895 3 2zM9 10l12-3"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="p-8 space-y-3">
+                        <span class="text-xs font-bold text-neon-purple uppercase tracking-widest">03 / Soundscape</span>
+                        <h3 class="text-2xl font-bold text-white group-hover:text-neon-purple transition-colors">沈浸式 Deep House 聲光場域</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed">
+                            頂級 Funktion-One 音響系統，結合頂尖駐店 DJ 與炫彩雷射燈光，隨夜色加深將餐廳完美切換至微醺夜店。
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- INTERACTIVE MENU SHOWCASE -->
+    <section id="menu" class="py-24 px-4 sm:px-6 lg:px-8 relative z-10 bg-night-900/60">
+        <div class="max-w-7xl mx-auto space-y-12">
+            
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+                <div class="space-y-3">
+                    <span class="text-xs font-bold uppercase tracking-[0.4em] text-neon-pink">Culinary & Mixology Highlights</span>
+                    <h2 class="text-3xl sm:text-5xl font-black font-display text-white">主廚主打與迷幻特調</h2>
+                </div>
+
+                <!-- Tab Filters -->
+                <div class="flex flex-wrap gap-2 glass-panel p-1.5 rounded-2xl border border-white/10" id="menuTabs">
+                    <button class="menu-tab active px-5 py-2.5 rounded-xl font-semibold text-xs transition-all bg-neon-pink text-white shadow-neon-pink" data-target="food">
+                        主廚精選主菜
+                    </button>
+                    <button class="menu-tab px-5 py-2.5 rounded-xl font-semibold text-xs text-slate-400 hover:text-white transition-all" data-target="cocktails">
+                        招牌迷幻特調
+                    </button>
+                    <button class="menu-tab px-5 py-2.5 rounded-xl font-semibold text-xs text-slate-400 hover:text-white transition-all" data-target="tapas">
+                        深夜小點 Tapas
+                    </button>
+                </div>
+            </div>
+
+            <!-- Menu Grid Items -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8" id="menuGrid">
+                
+                <!-- Item 1 (Food) -->
+                <div class="menu-item food glass-panel rounded-3xl overflow-hidden border border-white/10 group">
+                    <div class="h-60 overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1558030006-450675393462?auto=format&fit=crop&w=800&q=80" alt="Wagyu Steak" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <span class="absolute top-4 left-4 bg-neon-pink/90 text-white font-bold text-[10px] uppercase px-3 py-1 rounded-full tracking-wider">Chef's Signature</span>
+                    </div>
+                    <div class="p-6 space-y-4">
+                        <div class="flex justify-between items-start">
+                            <h3 class="font-bold text-xl text-white">M9+ 澳洲和牛肋眼佐松露赤紅醬</h3>
+                            <span class="text-neon-cyan font-display font-extrabold text-xl">NT$ 1,880</span>
+                        </div>
+                        <p class="text-slate-400 text-xs leading-relaxed">
+                            低溫舒肥24小時極品和牛，炙烤至外酥內嫩，搭配波爾多紅酒與黑松露濃縮醬汁。
+                        </p>
+                        <div class="flex items-center justify-between pt-2 border-t border-white/5">
+                            <span class="text-[11px] text-slate-500"><i class="fa-solid fa-fire text-amber-500 mr-1"></i>限量供應</span>
+                            <button class="text-xs font-bold text-neon-pink hover:text-white transition-colors flex items-center space-x-1">
+                                <span>放入品味清單</span>
+                                <i class="fa-solid fa-plus text-[10px]"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Item 2 (Food) -->
+                <div class="menu-item food glass-panel rounded-3xl overflow-hidden border border-white/10 group">
+                    <div class="h-60 overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&w=800&q=80" alt="Seafood Pasta" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <div class="p-6 space-y-4">
+                        <div class="flex justify-between items-start">
+                            <h3 class="font-bold text-xl text-white">波士頓龍蝦墨魚手工海鮮麵</h3>
+                            <span class="text-neon-cyan font-display font-extrabold text-xl">NT$ 1,280</span>
+                        </div>
+                        <p class="text-slate-400 text-xs leading-relaxed">
+                            主廚手作墨魚麵條，吸飽深海龍蝦高湯，佐炙燒北海道干貝與澎湖大明蝦。
+                        </p>
+                        <div class="flex items-center justify-between pt-2 border-t border-white/5">
+                            <span class="text-[11px] text-slate-500"><i class="fa-solid fa-gem text-neon-cyan mr-1"></i>海味人氣王</span>
+                            <button class="text-xs font-bold text-neon-pink hover:text-white transition-colors flex items-center space-x-1">
+                                <span>放入品味清單</span>
+                                <i class="fa-solid fa-plus text-[10px]"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Item 3 (Cocktails) -->
+                <div class="menu-item cocktails hidden glass-panel rounded-3xl overflow-hidden border border-white/10 group">
+                    <div class="h-60 overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=800&q=80" alt="Neon Cocktail" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <span class="absolute top-4 left-4 bg-neon-cyan/90 text-night-950 font-bold text-[10px] uppercase px-3 py-1 rounded-full tracking-wider">Molecular Mixology</span>
+                    </div>
+                    <div class="p-6 space-y-4">
+                        <div class="flex justify-between items-start">
+                            <h3 class="font-bold text-xl text-white">NOCTURNE #07 暮色幻境</h3>
+                            <span class="text-neon-cyan font-display font-extrabold text-xl">NT$ 480</span>
+                        </div>
+                        <p class="text-slate-400 text-xs leading-relaxed">
+                            金獎琴酒基底、紫羅蘭利口酒、蝶豆花泡沫與液態氮冷霧，伴隨微酸接骨木花香。
+                        </p>
+                        <div class="flex items-center justify-between pt-2 border-t border-white/5">
+                            <span class="text-[11px] text-slate-500"><i class="fa-solid fa-camera text-neon-pink mr-1"></i>IG 必拍爆款</span>
+                            <button class="text-xs font-bold text-neon-pink hover:text-white transition-colors flex items-center space-x-1">
+                                <span>放入品味清單</span>
+                                <i class="fa-solid fa-plus text-[10px]"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Item 4 (Cocktails) -->
+                <div class="menu-item cocktails hidden glass-panel rounded-3xl overflow-hidden border border-white/10 group">
+                    <div class="h-60 overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=800&q=80" alt="Smoked Bourbon" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <div class="p-6 space-y-4">
+                        <div class="flex justify-between items-start">
+                            <h3 class="font-bold text-xl text-white">煙燻泥煤狂想曲 (Smoked Bourbon)</h3>
+                            <span class="text-neon-cyan font-display font-extrabold text-xl">NT$ 520</span>
+                        </div>
+                        <p class="text-slate-400 text-xs leading-relaxed">
+                            12年波本威士忌結合橡木桶蘋果木煙燻，搭配手雕冰球與黑巧克力金箔。
+                        </p>
+                        <div class="flex items-center justify-between pt-2 border-t border-white/5">
+                            <span class="text-[11px] text-slate-500"><i class="fa-solid fa-whiskey-glass text-amber-500 mr-1"></i>紳士成熟風味</span>
+                            <button class="text-xs font-bold text-neon-pink hover:text-white transition-colors flex items-center space-x-1">
+                                <span>放入品味清單</span>
+                                <i class="fa-solid fa-plus text-[10px]"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Item 5 (Tapas) -->
+                <div class="menu-item tapas hidden glass-panel rounded-3xl overflow-hidden border border-white/10 group">
+                    <div class="h-60 overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1541529086526-db283c563270?auto=format&fit=crop&w=800&q=80" alt="Midnight Tapas" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <div class="p-6 space-y-4">
+                        <div class="flex justify-between items-start">
+                            <h3 class="font-bold text-xl text-white">西班牙伊比利豬生火腿佐無花果</h3>
+                            <span class="text-neon-cyan font-display font-extrabold text-xl">NT$ 620</span>
+                        </div>
+                        <p class="text-slate-400 text-xs leading-relaxed">
+                            Bellota 等級 36 個月風乾生火腿，搭配新鮮新鮮無花果與特級初榨橄欖油。
+                        </p>
+                        <div class="flex items-center justify-between pt-2 border-t border-white/5">
+                            <span class="text-[11px] text-slate-500"><i class="fa-solid fa-wine-glass text-neon-purple mr-1"></i>佐酒最佳搭檔</span>
+                            <button class="text-xs font-bold text-neon-pink hover:text-white transition-colors flex items-center space-x-1">
+                                <span>放入品味清單</span>
+                                <i class="fa-solid fa-plus text-[10px]"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- NIGHTLIFE EVENT CALENDAR SECTION -->
+    <section id="nightlife" class="py-24 px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="max-w-7xl mx-auto space-y-16">
+            
+            <div class="text-center space-y-4">
+                <span class="text-xs font-bold uppercase tracking-[0.4em] text-neon-cyan">Weekly Live Beats</span>
+                <h2 class="text-3xl sm:text-5xl font-black font-display text-white">夜間企劃 & DJ 行事曆</h2>
+                <p class="text-slate-400 text-sm max-w-xl mx-auto">每晚 21:00 起，國際級 DJ 現場駐場，燈光與重低音將空間推向最高潮。</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                
+                <!-- Event 1 -->
+                <div class="glass-panel rounded-3xl p-6 border border-white/10 hover:border-neon-pink/60 transition-all duration-300 relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-neon-pink/10 rounded-full blur-2xl group-hover:bg-neon-pink/30 transition-all"></div>
+                    <span class="text-xs font-black text-neon-pink tracking-widest uppercase">Every Thursday</span>
+                    <h3 class="text-2xl font-bold text-white mt-2 mb-4">NEON LADIES NIGHT</h3>
+                    <p class="text-slate-400 text-xs leading-relaxed mb-6">
+                        女性貴賓享指定特調無限暢飲，搭配 Future House 輕快節奏。
+                    </p>
+                    <div class="flex items-center justify-between text-xs text-slate-300 border-t border-white/10 pt-4">
+                        <span><i class="fa-regular fa-clock mr-2 text-neon-pink"></i>21:00 - 02:00</span>
+                        <a href="#reserve" class="font-bold text-neon-cyan hover:underline">搶先訂桌 &rarr;</a>
+                    </div>
+                </div>
+
+                <!-- Event 2 (Highlighted) -->
+                <div class="glass-panel-glow rounded-3xl p-6 border-neon-cyan/50 relative overflow-hidden group transform md:-translate-y-2">
+                    <div class="absolute top-3 right-3 bg-gradient-to-r from-neon-pink to-neon-purple text-white font-extrabold text-[9px] uppercase px-3 py-1 rounded-full shadow-neon-pink">
+                        HOT / 週五主打
+                    </div>
+                    <span class="text-xs font-black text-neon-cyan tracking-widest uppercase">Every Friday</span>
+                    <h3 class="text-2xl font-bold text-white mt-2 mb-4">DEEP HOUSE & BOURBON</h3>
+                    <p class="text-slate-300 text-xs leading-relaxed mb-6">
+                        邀請國內外 Top 100 DJ 駐場，重低音音浪伴隨奢華雪茄與威士忌饗宴。
+                    </p>
+                    <div class="flex items-center justify-between text-xs text-slate-200 border-t border-white/10 pt-4">
+                        <span><i class="fa-regular fa-clock mr-2 text-neon-cyan"></i>22:00 - 03:00</span>
+                        <a href="#reserve" class="font-bold text-neon-pink hover:underline">搶先訂桌 &rarr;</a>
+                    </div>
+                </div>
+
+                <!-- Event 3 -->
+                <div class="glass-panel rounded-3xl p-6 border border-white/10 hover:border-neon-purple/60 transition-all duration-300 relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-neon-purple/10 rounded-full blur-2xl group-hover:bg-neon-purple/30 transition-all"></div>
+                    <span class="text-xs font-black text-neon-purple tracking-widest uppercase">Every Saturday</span>
+                    <h3 class="text-2xl font-bold text-white mt-2 mb-4">ELECTRO LOUNGE RAVE</h3>
+                    <p class="text-slate-400 text-xs leading-relaxed mb-6">
+                        極致視覺雷射光雕秀搭配電音迷幻，適合派對狂歡與生日包廂慶祝。
+                    </p>
+                    <div class="flex items-center justify-between text-xs text-slate-300 border-t border-white/10 pt-4">
+                        <span><i class="fa-regular fa-clock mr-2 text-neon-purple"></i>22:00 - 03:30</span>
+                        <a href="#reserve" class="font-bold text-neon-cyan hover:underline">搶先訂桌 &rarr;</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- VIP PRIVATE BOX SECTION (High Value Upsell) -->
+    <section id="vip" class="py-24 px-4 sm:px-6 lg:px-8 relative z-10 bg-night-900/80 border-y border-white/10">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            
+            <div class="space-y-6">
+                <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-neon-purple/20 border border-neon-purple text-neon-purple text-xs font-extrabold uppercase tracking-widest">
+                    <i class="fa-solid fa-crown"></i>
+                    <span>Ultimate VIP Experience</span>
+                </div>
+                <h2 class="text-3xl sm:text-5xl font-black font-display text-white leading-tight">
+                    尊榮 VIP 獨家隱密包廂
+                </h2>
+                <p class="text-slate-300 text-sm leading-relaxed">
+                    專為頂級商務宴客、私人派對與明星藝人打造。獨立隱密通道、專屬私人調酒師與管家式服務，享受無與倫比的夜生活尊榮感。
+                </p>
+
+                <ul class="space-y-3 text-sm text-slate-300">
+                    <li class="flex items-center space-x-3">
+                        <i class="fa-solid fa-check-double text-neon-cyan"></i>
+                        <span>專屬專人調酒吧檯 & 獨立 KTV 頂級音響</span>
+                    </li>
+                    <li class="flex items-center space-x-3">
+                        <i class="fa-solid fa-check-double text-neon-cyan"></i>
+                        <span>可容納 10 - 20 位賓客奢華皮革沙發空間</span>
+                    </li>
+                    <li class="flex items-center space-x-3">
+                        <i class="fa-solid fa-check-double text-neon-cyan"></i>
+                        <span>客製化餐酒菜單與優先隱密通道預約</span>
+                    </li>
+                </ul>
+
+                <div class="pt-4">
+                    <a href="#reserve" class="inline-flex items-center space-x-3 px-8 py-4 rounded-xl bg-gradient-to-r from-neon-purple via-neon-pink to-neon-cyan text-white font-black text-sm uppercase tracking-wider shadow-neon-purple hover:scale-105 transition-all duration-300">
+                        <i class="fa-solid fa-gem"></i>
+                        <span>預約尊榮包廂專人服務</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Photo & SVG Badge Overlay -->
+            <div class="relative rounded-3xl overflow-hidden glass-panel border border-white/15 shadow-2xl group">
+                <img src="https://images.unsplash.com/photo-1560624052-449f5ddf0c31?auto=format&fit=crop&w=1000&q=80" alt="VIP Box Lounge" class="w-full h-[420px] object-cover group-hover:scale-105 transition-transform duration-700">
+                <div class="absolute inset-0 bg-gradient-to-t from-night-950 via-transparent to-transparent"></div>
+                
+                <div class="absolute bottom-6 left-6 right-6 p-6 glass-panel rounded-2xl border border-white/10 flex items-center justify-between">
+                    <div>
+                        <p class="text-xs text-neon-cyan font-bold uppercase tracking-wider">VIP Room Minimum Spend</p>
+                        <p class="text-2xl font-black text-white">低消 NT$ 25,000 起</p>
+                    </div>
+                    <span class="text-xs text-slate-400 bg-night-950/80 px-3 py-1.5 rounded-lg">每日僅限 2 間</span>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- SOCIAL PROOF & REVIEWS -->
+    <section id="reviews" class="py-24 px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="max-w-7xl mx-auto space-y-16">
+            
+            <div class="text-center space-y-4">
+                <div class="inline-flex items-center space-x-2 text-amber-400">
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <span class="text-white font-bold text-sm ml-2">4.9 / 5.0 (500+ Google 評價)</span>
+                </div>
+                <h2 class="text-3xl sm:text-5xl font-black font-display text-white">名流與饕客的極致好評</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                
+                <div class="glass-panel p-8 rounded-3xl space-y-4 border border-white/10">
+                    <div class="flex items-center space-x-4">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=120&q=80" alt="Reviewer" class="w-12 h-12 rounded-full object-cover border border-neon-pink">
+                        <div>
+                            <h4 class="font-bold text-white">David K.</h4>
+                            <p class="text-xs text-slate-400">知名企業高階主管</p>
+                        </div>
+                    </div>
+                    <p class="text-slate-300 text-xs leading-relaxed italic">
+                        「台北絕無僅有的精緻餐酒體驗！和牛肋眼嫩度完美，晚間 10 點燈光切換成 DJ 場時全場氣氛嗨到最高點！」
+                    </p>
+                </div>
+
+                <div class="glass-panel p-8 rounded-3xl space-y-4 border border-white/10">
+                    <div class="flex items-center space-x-4">
+                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=120&q=80" alt="Reviewer" class="w-12 h-12 rounded-full object-cover border border-neon-cyan">
+                        <div>
+                            <h4 class="font-bold text-white">Emily Wang</h4>
+                            <p class="text-xs text-slate-400">時尚生活 Blogger</p>
+                        </div>
+                    </div>
+                    <p class="text-slate-300 text-xs leading-relaxed italic">
+                        「招牌特調『暮色幻境』拍照超級仙！包廂的獨立 KTV 與私人調酒師讓朋友生日派對非常有面子，強烈建議提早訂位。」
+                    </p>
+                </div>
+
+                <div class="glass-panel p-8 rounded-3xl space-y-4 border border-white/10">
+                    <div class="flex items-center space-x-4">
+                        <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=120&q=80" alt="Reviewer" class="w-12 h-12 rounded-full object-cover border border-neon-purple">
+                        <div>
+                            <h4 class="font-bold text-white">Marcus Chen</h4>
+                            <p class="text-xs text-slate-400">美食評論家</p>
+                        </div>
+                    </div>
+                    <p class="text-slate-300 text-xs leading-relaxed italic">
+                        「從餐點品質到音樂流暢度都在水準之上，米其林級主廚的醬汁調配令人驚豔，絕對是今年最值得造訪的複合餐酒館。」
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- INTERACTIVE RESERVATION SECTION -->
+    <section id="reserve" class="py-24 px-4 sm:px-6 lg:px-8 relative z-10 bg-night-900 border-t border-white/10">
+        <div class="max-w-4xl mx-auto space-y-12">
+            
+            <div class="text-center space-y-4">
+                <span class="text-xs font-bold uppercase tracking-[0.4em] text-neon-pink">Instant Online Booking</span>
+                <h2 class="text-3xl sm:text-5xl font-black font-display text-white">開啟您的夜間極致感官之旅</h2>
+                <p class="text-slate-400 text-sm">填寫下方資訊，系統將立即為您確認席位並發送 SMS 簡訊憑證。</p>
+            </div>
+
+            <div class="glass-panel p-8 sm:p-12 rounded-3xl border border-white/15 shadow-2xl relative overflow-hidden">
+                <form id="reservationForm" class="space-y-8">
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <div class="space-y-2">
+                            <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider">訂位姓名 *</label>
+                            <input type="text" required placeholder="例如：林先生 / Ms. Lin" class="w-full px-4 py-3.5 rounded-xl bg-night-950/80 border border-white/10 text-white text-sm focus:outline-none focus:border-neon-pink transition-colors">
+                        </div>
+
+                        <div class="space-y-2">
+                            <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider">連絡電話 *</label>
+                            <input type="tel" required placeholder="例如：0912-345-678" class="w-full px-4 py-3.5 rounded-xl bg-night-950/80 border border-white/10 text-white text-sm focus:outline-none focus:border-neon-pink transition-colors">
+                        </div>
+
+                        <div class="space-y-2">
+                            <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider">預約日期 *</label>
+                            <input type="date" required value="2026-10-16" class="w-full px-4 py-3.5 rounded-xl bg-night-950/80 border border-white/10 text-white text-sm focus:outline-none focus:border-neon-pink transition-colors">
+                        </div>
+
+                        <div class="space-y-2">
+                            <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider">預約時段 *</label>
+                            <select class="w-full px-4 py-3.5 rounded-xl bg-night-950/80 border border-white/10 text-white text-sm focus:outline-none focus:border-neon-pink transition-colors cursor-pointer">
+                                <option class="bg-night-900">18:00 - 暮色餐酒饗宴</option>
+                                <option class="bg-night-900">20:30 - 微醺 DJ 現場場</option>
+                                <option class="bg-night-900">23:00 - 深夜派對暢飲場</option>
+                            </select>
+                        </div>
+
+                        <div class="space-y-2">
+                            <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider">用餐人數 *</label>
+                            <select class="w-full px-4 py-3.5 rounded-xl bg-night-950/80 border border-white/10 text-white text-sm focus:outline-none focus:border-neon-pink transition-colors cursor-pointer">
+                                <option class="bg-night-900">2 人席位 (浪漫約會)</option>
+                                <option class="bg-night-900">4 人席位 (好友聚餐)</option>
+                                <option class="bg-night-900">6 - 8 人高腳吧檯區</option>
+                                <option class="bg-night-900">VIP 奢華包廂 (10人以上)</option>
+                            </select>
+                        </div>
+
+                        <div class="space-y-2">
+                            <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider">慶祝目的 / 特別需求</label>
+                            <input type="text" placeholder="例如：生日慶祝、求婚、週年紀念" class="w-full px-4 py-3.5 rounded-xl bg-night-950/80 border border-white/10 text-white text-sm focus:outline-none focus:border-neon-pink transition-colors">
+                        </div>
+                    </div>
+
+                    <button type="submit" class="w-full py-5 rounded-2xl bg-gradient-to-r from-neon-pink via-neon-purple to-neon-cyan text-white font-black text-base uppercase tracking-widest hover:shadow-neon-pink hover:scale-[1.01] transition-all duration-300 flex items-center justify-center space-x-3">
+                        <i class="fa-solid fa-check-circle text-xl"></i>
+                        <span>確認送出預約訂位</span>
+                    </button>
+
+                    <p class="text-[11px] text-center text-slate-500">
+                        * 訂位成功後，系統將於 5 分鐘內發送簡訊確認信，現場將為您保留席位 10 分鐘。
+                    </p>
+                </form>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- FOOTER & MAP SECTION -->
+    <footer class="bg-night-950 border-t border-white/10 py-16 px-4 sm:px-6 lg:px-8 relative z-10 text-slate-400">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+            
+            <div class="space-y-4 md:col-span-1">
+                <a href="#" class="flex items-center space-x-3">
+                    <span class="font-display font-black text-2xl tracking-widest text-white">NOCTURNE</span>
+                </a>
+                <p class="text-xs leading-relaxed text-slate-500">
+                    結合頂級餐酒、微醺特調與重低音音浪的台北奢華夜生活地標。
+                </p>
+                <div class="flex space-x-4 pt-2">
+                    <a href="#" class="w-9 h-9 rounded-full glass-panel flex items-center justify-center text-slate-300 hover:text-neon-pink hover:border-neon-pink transition-colors"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#" class="w-9 h-9 rounded-full glass-panel flex items-center justify-center text-slate-300 hover:text-neon-cyan hover:border-neon-cyan transition-colors"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#" class="w-9 h-9 rounded-full glass-panel flex items-center justify-center text-slate-300 hover:text-neon-purple hover:border-neon-purple transition-colors"><i class="fa-solid fa-envelope"></i></a>
+                </div>
+            </div>
+
+            <div class="space-y-3">
+                <h4 class="font-bold text-white text-sm uppercase tracking-wider">營業時間</h4>
+                <ul class="space-y-2 text-xs">
+                    <li class="flex justify-between"><span>週二至週四:</span> <span class="text-slate-200">18:00 - 02:00</span></li>
+                    <li class="flex justify-between"><span>週五至週六:</span> <span class="text-neon-pink font-bold">18:00 - 03:30</span></li>
+                    <li class="flex justify-between"><span>週日:</span> <span class="text-slate-200">18:00 - 01:00</span></li>
+                    <li class="text-slate-500 text-[10px] pt-1">* 週一固定公休消毒</li>
+                </ul>
+            </div>
+
+            <div class="space-y-3">
+                <h4 class="font-bold text-white text-sm uppercase tracking-wider">地標與聯絡方式</h4>
+                <ul class="space-y-2 text-xs">
+                    <li class="flex items-start space-x-2">
+                        <i class="fa-solid fa-location-dot text-neon-pink mt-0.5"></i>
+                        <span>台北市大安區敦化南路一段 88 號 B1</span>
+                    </li>
+                    <li class="flex items-center space-x-2">
+                        <i class="fa-solid fa-phone text-neon-cyan"></i>
+                        <span>02-2771-8899</span>
+                    </li>
+                    <li class="flex items-center space-x-2">
+                        <i class="fa-solid fa-subway text-neon-purple"></i>
+                        <span>捷運忠孝敦化站 8 號出口步行 3 分鐘</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Dark Styled Map Widget Placeholder -->
+            <div class="glass-panel p-2 rounded-2xl border border-white/10 h-36 relative overflow-hidden group">
+                <img src="https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?auto=format&fit=crop&w=500&q=80" alt="Map Preview" class="w-full h-full object-cover opacity-50 rounded-xl group-hover:scale-110 transition-transform">
+                <div class="absolute inset-0 flex items-center justify-center">
+                    <a href="https://maps.google.com" target="_blank" class="px-3 py-1.5 rounded-lg bg-night-950/90 text-xs text-white font-bold border border-neon-cyan/50 shadow-neon-cyan flex items-center space-x-2">
+                        <i class="fa-solid fa-map-location-dot text-neon-cyan"></i>
+                        <span>開啟 Google 地圖導航</span>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="max-w-7xl mx-auto border-t border-white/5 pt-8 flex flex-col sm:flex-row justify-between items-center text-xs text-slate-500 gap-4">
+            <p>© 2026 NOCTURNE Bistro & Lounge. All Rights Reserved. 禁止酒駕，未滿18歲請勿飲酒。</p>
+            <div class="flex space-x-6">
+                <a href="#" class="hover:underline">隱私權政策</a>
+                <a href="#" class="hover:underline">訂位服務條款</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- INTERACTIVE JAVASCRIPT LOGIC -->
+    <script>
+        // Menu Filter Switcher
+        const menuTabs = document.querySelectorAll('.menu-tab');
+        const menuItems = document.querySelectorAll('.menu-item');
+
+        menuTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                menuTabs.forEach(t => {
+                    t.classList.remove('active', 'bg-neon-pink', 'text-white', 'shadow-neon-pink');
+                    t.classList.add('text-slate-400');
+                });
+                tab.classList.add('active', 'bg-neon-pink', 'text-white', 'shadow-neon-pink');
+                tab.classList.remove('text-slate-400');
+
+                const target = tab.getAttribute('data-target');
+                menuItems.forEach(item => {
+                    if (item.classList.contains(target)) {
+                        item.classList.remove('hidden');
+                    } else {
+                        item.classList.add('hidden');
+                    }
+                });
+            });
+        });
+
+        // Mobile Menu Drawer Toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileDrawer = document.getElementById('mobileDrawer');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileDrawer.classList.toggle('hidden');
+        });
+
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileDrawer.classList.add('hidden');
+            });
+        });
+
+        // Real-time Booking Toast Popup Simulation
+        setTimeout(() => {
+            const toast = document.getElementById('bookingToast');
+            toast.classList.remove('translate-y-32', 'opacity-0', 'pointer-events-none');
+            
+            setTimeout(() => {
+                toast.classList.add('translate-y-32', 'opacity-0', 'pointer-events-none');
+            }, 6000);
+        }, 3000);
+
+        // Reservation Form Submission Interaction
+        document.getElementById('reservationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('🎉 預約成功！簡訊憑證已發送至您的手機，NOCTURNE 期待今夜為您服務。');
+            this.reset();
+        });
+    </script>
+</body>
+</html>
